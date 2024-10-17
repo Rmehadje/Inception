@@ -42,39 +42,37 @@ The project architecture is composed of the following key services:
 
 1. NGINX (Reverse Proxy):
 NGINX serves as a reverse proxy, directing client requests to the appropriate server, typically sitting in front of web services like WordPress and MariaDB. In the Inception project, it’s crucial because it:
+    Handles SSL/TLS encryption: Protects sensitive data by encrypting communication between users and your WordPress site.
+    Load Balancing: Distributes incoming traffic across multiple instances of a service (if scaled), ensuring optimal performance and availability.
+    Traffic Routing: Routes traffic based on server rules, making sure requests for different services are sent to the right container (e.g., WordPress or MariaDB).
 
-Handles SSL/TLS encryption: Protects sensitive data by encrypting communication between users and your WordPress site.
-Load Balancing: Distributes incoming traffic across multiple instances of a service (if scaled), ensuring optimal performance and availability.
-Traffic Routing: Routes traffic based on server rules, making sure requests for different services are sent to the right container (e.g., WordPress or MariaDB).
-
-2. WordPress:
+3. WordPress:
 WordPress is a widely used Content Management System (CMS) that allows users to build and manage websites without needing extensive coding knowledge. In the context of the Inception project:
 
-Site Management: Provides an easy-to-use dashboard for managing website content, themes, and plugins.
-Dynamic Content Generation: WordPress dynamically generates the site's pages, pulling data from the MariaDB database and delivering it to users via NGINX.
-Customization: Supports themes and plugins for extended functionality, allowing users to tailor their site to their needs.
+    Site Management: Provides an easy-to-use dashboard for managing website content, themes, and plugins.
+    Dynamic Content Generation: WordPress dynamically generates the site's pages, pulling data from the MariaDB database and delivering it to users via NGINX.
+    Customization: Supports themes and plugins for extended functionality, allowing users to tailor their site to their needs.
 
 3. MariaDB:
 MariaDB is a robust Relational Database Management System (RDBMS) and an open-source alternative to MySQL. It is used to store all the data required by WordPress, including:
 
-Content Data: Stores blog posts, pages, and site content.
-User Information: Handles user credentials and access data.
-Plugin Data: Stores information for plugins and custom configurations used by the WordPress site. In the Docker architecture, MariaDB is isolated in its own container, allowing for more secure and efficient data handling.
+    Content Data: Stores blog posts, pages, and site content.
+    User Information: Handles user credentials and access data.
+    Plugin Data: Stores information for plugins and custom configurations used by the WordPress site. In the Docker architecture, MariaDB is isolated in its own container, allowing for more secure and efficient data handling.
 
 4. Docker-Compose:
 Docker-Compose is a tool used for defining and running multi-container Docker applications. For the Inception project:
 
-Orchestration: It manages the relationships between containers (WordPress, MariaDB, and NGINX), allowing them to interact and communicate seamlessly.
-Configuration Management: Allows for easy configuration of each service through a docker-compose.yml file, specifying the networks, volumes, and environment variables for each container.
-Scaling: If needed, Docker-Compose can scale services (e.g., running multiple WordPress containers) for better load handling.
+    Orchestration: It manages the relationships between containers (WordPress, MariaDB, and NGINX), allowing them to interact and communicate seamlessly.
+    Configuration Management: Allows for easy configuration of each service through a docker-compose.yml file, specifying the networks, volumes, and environment variables for each container.
+    Scaling: If needed, Docker-Compose can scale services (e.g., running multiple WordPress containers) for better load handling.
 
 4 - ***Volumes***:
 
 Volumes are used to ensure that critical data is retained even when containers are restarted. In the Inception project, the following volumes are utilized:
-
-WordPress volume: Stores WordPress content and data, typically mounted to /var/www/html within the container.
-MariaDB volume: Persists the database files, typically located at /var/lib/mysql inside the container.
-These volumes enable the system to retain important information like website content and database entries, even after the containers are rebuilt or restarted.
+    WordPress volume: Stores WordPress content and data, typically mounted to /var/www/html within the container.
+    MariaDB volume: Persists the database files, typically located at /var/lib/mysql inside the container.
+    These volumes enable the system to retain important information like website content and database entries, even after the containers are rebuilt or restarted.
 
 5 - ***Containers***:
 
