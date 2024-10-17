@@ -1,5 +1,5 @@
 ### Inception
-1 - ***Introduction:*** 
+### 1 - Introduction:
 Inception is a system administration project from 42 that involves creating and managing a set of Docker containers for a multi-service infrastructure. Using Docker Compose, the project integrates services like WordPress, MariaDB, and a reverse proxy into a secure, 
 scalable, and efficient architecture. It reinforces key concepts in virtualization, container management, and orchestration, ensuring that the setup is both maintainable and adaptable to future needs.
 
@@ -14,7 +14,7 @@ scalable, and efficient architecture. It reinforces key concepts in virtualizati
 8. [Conclusion](#conclusion)
 
 
-2 - ***Project Structure***
+### 2 - Project Structure:
 ```
 inception/
 ├── Makefile
@@ -38,7 +38,7 @@ inception/
     ├── mariadb/
     └── wordpress/
 ```
-3 - ***Services***:
+### 3 - Services:
 The project architecture is composed of the following key services:
 
 1. NGINX (Reverse Proxy):
@@ -68,14 +68,14 @@ Orchestration: It manages the relationships between containers (WordPress, Maria
 Configuration Management: Allows for easy configuration of each service through a docker-compose.yml file, specifying the networks, volumes, and environment variables for each container.
 Scaling: If needed, Docker-Compose can scale services (e.g., running multiple WordPress containers) for better load handling.
 
-4 - ***Volumes***:
+### 4 - Volumes:
 Volumes are used to ensure that critical data is retained even when containers are restarted. In the Inception project, the following volumes are utilized:
 
 WordPress volume: Stores WordPress content and data, typically mounted to /var/www/html within the container.
 MariaDB volume: Persists the database files, typically located at /var/lib/mysql inside the container.
 These volumes enable the system to retain important information like website content and database entries, even after the containers are rebuilt or restarted.
     
-5 - ***Containers***:
+### 5 - Containers:
 
 Containers are the heart of the services provided in the Inception project. Each container runs an isolated service:
 
@@ -84,7 +84,7 @@ MariaDB container: Handles the database operations for WordPress, storing user d
 Nginx container (or an alternative reverse proxy): Manages incoming web traffic, routing requests to the appropriate service, such as WordPress.
 Each container operates independently, making the setup modular and easy to manage.
 
-6 - ***Networks***:
+### 6 - Networks:
 
 Networks allow containers to communicate with one another while remaining isolated from the host machine:
 
@@ -92,7 +92,7 @@ A custom bridge network is configured to allow communication between the WordPre
 The Nginx container (reverse proxy) communicates with both the WordPress and MariaDB containers, routing traffic based on requests.
 This network configuration ensures that all services can communicate internally in a secure and efficient manner.
 
-7 - ***Prerequisites***:
+### 7 - Prerequisites:
 
 1 . Clone the repository:
 ```
@@ -112,6 +112,6 @@ make build
 ```
 make down
 ```
-8 - ***Conclusion***:
+### 8 - Conclusion:
 
 I would like to thank 42 for the opportunity to work on such a project, designed and implemented by Rayan Mehadjeri.
