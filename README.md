@@ -1,5 +1,6 @@
 ### Inception
-1 - ***Introduction:*** Inception is a system administration project from 42 that involves creating and managing a set of Docker containers for a multi-service infrastructure. Using Docker Compose, the project integrates services like WordPress, MariaDB, and a reverse proxy into a secure, 
+1 - ***Introduction:*** 
+Inception is a system administration project from 42 that involves creating and managing a set of Docker containers for a multi-service infrastructure. Using Docker Compose, the project integrates services like WordPress, MariaDB, and a reverse proxy into a secure, 
 scalable, and efficient architecture. It reinforces key concepts in virtualization, container management, and orchestration, ensuring that the setup is both maintainable and adaptable to future needs.
 
 ## Table of Contents
