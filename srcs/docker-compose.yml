@@ -10,11 +10,11 @@ services:
       - wordpress
     ports:
       - "443:443"
+    env_file:
+      - .env
     networks:
       - inception
     volumes:
-      - ./requirements/nginx/conf/:/etc/nginx/http.d/
-      - ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www/
     restart: always
 
@@ -55,16 +55,7 @@ services:
 
 volumes:
   wp-volume:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/data/wordpress
-
   db-volume:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/data/mariadb
 
 networks:
     inception:

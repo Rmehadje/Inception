@@ -1,35 +1,45 @@
 name = inception
-all:
-	@printf "Launch configuration ${name}...\n"
-	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d
+compose_file = srcs/docker-compose.yml
+env_file = srcs/.env
+wordpress_data = ~/data/wordpress
+mariadb_data = ~/data/mariadb
+
+all: start
+	@echo "launch config for ${name}...\n"
 
 build:
-	@printf "Building configuration ${name}...\n"
+	@echo "Building configuration ${name}...\n"
 	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+	@docker-compose -f $(compose_file) --env-file $(env_file) build
+
+build-and-start:
+	@echo "Starting containers for ${name}...\n"
+	@docker-compose -f $(compose_file) --env-file $(env_file) up -d
+
+start:
+	@echo "Starting containers for ${name}..."
+	@docker-compose -f $(compose_file) --env-file $(env_file) up -d
 
 down:
-	@printf "Stopping configuration ${name}...\n"
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env down
-
-re: down
-	@printf "Rebuild configuration ${name}...\n"
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+	@echo "Stopping configuration for ${name}...\n"
+	@docker-compose -f $(compose_file)  --env-file $(env_file) down
 
 clean: down
-	@printf "Cleaning configuration ${name}...\n"
-	@docker system prune -a
-	@sudo rm -rf ~/data/wordpress/*
-	@sudo rm -rf ~/data/mariadb/*
+	@echo "Cleaning configuration for ${name}...\n"
+	@docker-compose -f $(compose_file) --env-file $(env_file) down --volumes --remove-orphans
+	@sudo rm -rf $(wordpress_data)
+	@sudo rm -rf $(mariadb_data)
 
 fclean:
-	@printf "Total clean of all configurations docker\n"
-	@docker stop $$(docker ps -qa)
+	@echo "Complete cleanse of all configurations docker\n"
+	@docker-compose -f $(compose_file) --env-file $(env_file) down --volumes --remove-orphans
 	@docker system prune --all --force --volumes
 	@docker network prune --force
 	@docker volume prune --force
-	@sudo rm -rf ~/data/wordpress/*
-	@sudo rm -rf ~/data/mariadb/*
+	@sudo rm -rf $(wordpress_data)
+	@sudo rm -rf $(mariadb_data)
+
+re:	fclean build-and-start
+	@echo "Rebuild config for ${name}...\n"
 
 .PHONY	: all build down re clean fclean
